@@ -17,11 +17,9 @@ CREATE TABLE client(CustomerId INT  PRIMARY KEY AUTO_INCREMENT,
                   Satisfaction_Score INT,
                   Point_Earned INT);
 ```
-```text
-Таблица client и ее заполнение происходило по средствам запроса Mysql
 
-```
-sql
+
+```sql
 LOAD DATA LOCAL INFILE 'C:/db/client.csv'
 INTO TABLE client
 FIELDS TERMINATED BY ','
@@ -29,9 +27,10 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 ```
-```text
 Таблица client и ее заполнение происходило по средствам команд Mysql
 Остальные таблицы созданы по средствам инструментария в среде Mysql Worckbench
+```text
+
 # CustomerId	Surname	Geography	Gender	Age	Tenure	Balance	EstimatedSalary	Exited	Complain	Satisfaction_Score	Point_Earned
 15565701	Ferri	Spain	Male	32	2	76087.98	151822.66	0	0	1	308
 15565779	Kent	France	Male	28	7	0.00	823.96	0	0	1	383
@@ -39,7 +38,7 @@ IGNORE 1 ROWS;
 15565714	Cattaneo	Spain	Male	39	9	0.00	68873.80	0	0	5	535
 15565706	Akobundu	France	Female	28	4	141792.61	22001.91	0	0	2	695
 ```
-#### 2 Коллеги предоставили файл csv с неполной информации заказанной выгрузки, отсутствуют важные данные, как активно клиент пользуется услугами банка. Обновить таблицу client и добавить столбец IsActiveMember из новой выгрузки
+#### 2 Коллеги предоставили файл csv с неполной информацией заказанной выгрузки, отсутствуют важные данные, как активно клиент пользуется услугами банка. Обновить таблицу client и добавить столбец IsActiveMember из новой выгрузки
 ```sql
 ALTER TABLE client
 ADD IsActiveMember INT;
@@ -146,7 +145,7 @@ Spain	413
 ```sql
 SELECT Tenure, COUNT(Tenure) AS Количество
 FROM client
-WHERE Geography = 'France'  AND exited = 1
+WHERE Geography = 'Germany'  AND exited = 1
 GROUP BY Tenure
 ORDER BY Tenure ASC;
 ```
@@ -176,6 +175,13 @@ FROM client
 ORDER BY Tenure_Category; 
 ```
 ```text
+# CustomerId	Surname	Geography	Gender	Age	Tenure	Balance	EstimatedSalary	Exited	Complain	Satisfaction Score	Point_Earned	IsActiveMember	Tenure_Category
+15762091	Simpson	Germany	Male	46	1	170826.55	45041.32	0	0	2	689	0	0-3
+15807457	Abernathy	Spain	Female	45	2	0	197789.83	1	1	4	603	0	0-3
+15796167	Flores	France	Male	20	0	83459.86	146752.67	0	0	4	814	1	0-3
+15777614	Webb	Spain	Male	27	2	172463.45	40315.27	0	0	3	704	1	0-3
+15790763	Trujillo	France	Male	35	2	101257.16	118113.64	0	0	4	900	1	0-3
+
 ```
 #### 10 Найти средний баланс, зарплату и рейтинг у клиентов в каждой категории.
 ```sql
@@ -214,6 +220,7 @@ ORDER BY CreditScore DESC
 15665008	850
 15625092	850
 …
+```
 #### 12 Найти количество и процент клиентов использующие кредитные карты в каждой стране.
 ```sql
 SELECT Geography, COUNT(Customer) AS Количество, (COUNT(Customer) / (SELECT COUNT(*) FROM creditcard)) * 100 AS Процент_от_общего_числа
@@ -262,13 +269,13 @@ Spain	1.2875
 France	1.2876
 Germany	1.4895
 ```
-#### 15 Понизить рейтинг клиента ушедших из банка до 0
+#### 15 Понизить рейтинг клиента ушедших из банка до 0/
 ```sql
 UPDATE client
 SET Point_Earned = 0
 WHERE Exited = 1;
 ```
-### 16 Клиентам с кредитным рейтингом выше 850 и стажем более 7 лет выдали платиновые карты, обновить данные в таблице пользуются более 7 лет
+### 16 Клиентам с кредитным рейтингом выше 850 и стажем более 7 лет выдали платиновые карты, обновить данные в таблице/
 ```sql
 UPDATE Creditcard
 SET CardType = 'Platinum'
@@ -308,46 +315,3 @@ INTO OUTFILE '/var/lib/mysql-files/clints_out.csv'
 
 
 
-```text
-
-
-product
-
-id
-Customer	
-NumOfProducts	
-IsActiveMember
-
-
-
-client
-
-CustomerId	
-Surname	
-Geography	
-Gender	
-Age	
-Tenure	
-Balance	
-EstimatedSalary	
-Exited	
-Complain	
-SatisfactionScore	
-PointEarned
-
-
-CreditScore
-
-id
-Customer	
-CreditScore
-
-
-Credit card
-
-Id
-Customer	
-HasCrCard	
-Card Type
-
-```
