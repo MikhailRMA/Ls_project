@@ -55,3 +55,46 @@
 
 18. Заработанные очки:
 «Накопленные баллы» показывают количество баллов лояльности, которые клиент накопил за время использования своей кредитной карты. Клиенты, которые зарабатывают больше баллов, как правило, более активно пользуются продуктами и услугами банка, что снижает вероятность их ухода. Эта функция является хорошим показателем активности и удовлетворенности клиентов и может дать ценную информацию об усилиях по удержанию клиентов и эффективности программ лояльности.
+
+
+
+
+product
+
+id
+Customer	
+NumOfProducts	
+IsActiveMember
+
+
+
+client
+
+CustomerId	
+Surname	
+Geography	
+Gender	
+Age	
+Tenure	
+Balance	
+EstimatedSalary	
+Exited	
+Complain	
+SatisfactionScore	
+PointEarned
+
+
+CreditScore
+
+id
+Customer	
+CreditScore
+
+
+Credit card
+
+Id
+Customer	
+HasCrCard	
+Card Type
+
